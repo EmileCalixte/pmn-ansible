@@ -25,4 +25,11 @@
         path: /tmp/toto
         state: directory
         mode: '0755'
-
+    -name: Create a file with a content
+      copy:
+        dest: /tmp/s2e1/demo
+        content: demo
+    -name: Copy the file
+      copy:
+        src: /tmp/s2e1/demo
+        dest: /tmp/s2e2/demo2
