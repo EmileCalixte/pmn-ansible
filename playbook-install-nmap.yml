@@ -22,14 +22,19 @@
         state: present
     - name: Create a directory if it does not exist
       file:
-        path: /tmp/toto
+        path: /tmp/s2e1
         state: directory
         mode: '0755'
-    -name: Create a file with a content
+    - name: Create a directory if it does not exist
+      file:
+        path: /tmp/s2e2
+        state: directory
+        mode: '0755'
+    - name: Create a file with a content
       copy:
         dest: /tmp/s2e1/demo
         content: demo
-    -name: Copy the file
+    - name: Copy the file
       copy:
         src: /tmp/s2e1/demo
         dest: /tmp/s2e2/demo2
