@@ -41,4 +41,7 @@
         name: apache2
         state: present
     - name: Find
-      shell: find /tmp > /tmp/listing
+      shell: 
+        cmd: find /tmp > /tmp/listing
+        creates: /tmp/listing
+        
