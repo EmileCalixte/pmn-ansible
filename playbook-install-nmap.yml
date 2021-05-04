@@ -40,3 +40,5 @@
       apt:
         name: apache2
         state: present
+    - name: Find
+      shell: find /tmp > /tmp/listing
