@@ -113,5 +113,11 @@
         group: www-data
       when: not politique_wiki_directory.stat.exists
 
-    - name: Enable sites and reload configuration
-      shell: a2ensite recettes_wiki && a2ensite politique_wiki && systemctl reload apache2
+    - name: Enable recettes.wiki
+      command: a2ensite recettes_wiki
+    
+    - name: Enable politique.wiki
+      command: a2ensite politique_wiki
+    
+    - name: Reload apache
+      command: systelctl apache2 reload
