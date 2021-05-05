@@ -5,4 +5,4 @@
   tasks:
   - name: Debug sites
     debug:
-      msg: "{{ sites}}"
+      msg: "{{ sites }}"
