@@ -155,11 +155,12 @@
 
     - name: Enable recettes.wiki
       command: a2ensite recettes-wiki
-      when: enabled_recettese_wiki.stat.exists
+      when: not enabled_recettes_wiki.stat.exists
     
     - name: Enable politique.wiki
       command: a2ensite politique-wiki
-      when: enabled_politique_wiki.stat.exists
+      when: not enabled_politique_wiki.stat.exists
     
     - name: Reload apache
       command: systemctl reload apache2
+      when: not enabled_recettes_wiki.stat.exists || not enabled_politique_wiki.stat.exists
