@@ -82,14 +82,12 @@
     
     - name: Change permissions in /var/www
       file:
-        path: /var/www/{{ item }}
+        path: /var/www/{{ item.var_www_directory }}
         state: directory
         recurse: yes
         owner: www-data
         group: www-data
-      with_items:
-        - recettes_wiki
-        - politique_wiki
+      with_items: "{{ sites }}"
     
     ######################
     ## UPDATE HOSTS
@@ -98,10 +96,8 @@
     - name: Add recettes.wiki in hosts
       lineinfile:
         dest: /etc/hosts
-        line: "{{ item }}"
-      with_items:
-        - "127.0.0.1  recettes.wiki"
-        - "127.0.0.1  politique.wiki"
+        line: "127.0.0.1  {{ item.url }}"
+      with_items: "{{ sites }}"
     
     ######################
     ## ENABLE SITES AND RELOAD APACHE

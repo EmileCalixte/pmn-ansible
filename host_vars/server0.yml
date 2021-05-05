@@ -4,5 +4,7 @@ vim_yaml: false
 sites:
   - url: recettes.wiki
     conf_file: recettes-wiki.conf
+    var_www_directory: recettes_wiki
   - url: politique.wiki
     conf_file: politique-wiki.conf
+    var_www_directory: politique_wiki
