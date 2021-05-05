@@ -65,12 +65,12 @@
     - name: Check if directories exist in /var/www
       stat:
         path: "/var/www/{{ item.var_www_directory }}"
-      register: item.var_www_directory_stat
+      register: toto
       with_items: "{{ sites }}"
 
     - name: Debug
       debug:
-        msg: "{{ sites }}"
+        msg: "{{ toto }}"
 
     - name: Copy dokuwiki to /var/www
       command: "cp -r /usr/src/dokuwiki /var/www/{{ item.var_www_directory }}"
