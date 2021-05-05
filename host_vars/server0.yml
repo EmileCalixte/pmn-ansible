@@ -3,8 +3,6 @@ vim_yaml: false
 
 sites:
   - url: recettes.wiki
-    something: test
-    something_else: test2
+    conf_file: recettes-wiki.conf
   - url: politique.wiki
-    something: test3
-    something_else: test4
+    conf_file: politique-wiki.conf

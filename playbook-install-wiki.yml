@@ -54,11 +54,9 @@
 
     - name: Copy virtualhosts
       copy:
-        src: files/{{ item }}
-        dest: /etc/apache2/sites-available/{{ item }}
-      with_items:
-        - recettes-wiki.conf
-        - politique-wiki.conf
+        src: files/{{ item.conf_file }}
+        dest: /etc/apache2/sites-available/{{ item.conf_file }}
+      with_items: "{{ sites }}"
     
     ######################
     ## WWW DIRECTORIES
