@@ -8,6 +8,10 @@
         name:
           - apache2
           - php7.3
+    
+    ######################
+    ## DOWNLOAD DOKUWIKI
+    ######################
 
     - name: Check if dokuwiki is already installed
       stat:
@@ -34,7 +38,7 @@
       when: not dokuwiki_directory.stat.exists or not dokuwiki_directory.stat.isdir
 
     - name: Rename dokuwiki directory
-      command: mv /usr/src/dokuwiki-2020-07-29 /usr/src/dokuwiki
+      command: mv /usr/src/dokuwiki-2020-07-29 /usr/src/dokuwiki # TODO USE VARIABLE
       when: not dokuwiki_directory.stat.exists or not dokuwiki_directory.stat.isdir
 
     - name: Delete downloaded archive
@@ -42,4 +46,66 @@
         path: /usr/src/dokuwiki-stable.tgz
         state: absent
       when: not dokuwiki_directory.stat.exists or not dokuwiki_directory.stat.isdir
-        
+    
+    ######################
+    ## VIRTUALHOST
+    ######################
+
+    - name: Check if recettes.wiki virtualhost exists
+      stat:
+        path: /etc/apache2/recettes-wiki.conf
+      register: recettes-wiki-vhost
+
+    - name: Check if politique.wiki virtualhost exists
+      stat:
+        path: /etc/apache2/politique-wiki.conf
+      register: politique-wiki-vhost
+
+    - name: Copy recettes.wiki virtualhost
+      file:
+        src: files/recettes-wiki.conf
+        dest: /etc/apache2/recettes-wiki.conf
+      when: not recettes-wiki-vhost.stat.exists
+
+    - name: Copy politique.wiki virtualhost
+      file:
+        src: files/politique-wiki.conf
+        dest: /etc/apache2/politique-wiki.conf
+      when: not politique-wiki-vhost.stat.exists
+    
+    ######################
+    ## WWW DIRECTORIES
+    ######################
+
+    - name: Check if recettes_wiki directory exists
+      stat:
+        path: /var/www/recettes_wiki
+      register: recettes_wiki_directory
+
+    - name: Check if politique_wiki directory exists
+      stat:
+        path: /var/www/politique_wiki
+      register: politique_wiki_directory
+
+    - name: Copy dokuwiki to recettes_wiki
+      copy: 
+        remote_src: yes
+        src: /usr/src/dokuwiki
+        dest: /var/www/recettes_wiki
+        owner: www-data
+        group: www-data
+        mode: '0755'
+      when: not recettes_wiki_directory.stat.exists
+
+    - name: Copy dokuwiki to politique_wiki
+      copy: 
+        remote_src: yes
+        src: /usr/src/dokuwiki
+        dest: /var/www/politique_wiki
+        owner: www-data
+        group: www-data
+        mode: '0755'
+      when: not politique_wiki_directory.stat.exists
+
+    - name: Enable sites and reload configuration
+      shell: a2ensite recettes_wiki && a2ensite politique_wiki && systemctl reload apache2
