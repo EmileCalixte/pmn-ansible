@@ -101,7 +101,6 @@
       lineinfile:
         dest: /etc/hosts
         line: "{{ item }}"
-        line: "127.0.0.1  recettes.wiki"
       with_items:
         - "127.0.0.1  recettes.wiki"
         - "127.0.0.1  politique.wiki"
