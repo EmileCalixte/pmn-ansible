@@ -12,6 +12,11 @@
       get_url:
         url: https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
         dest: /usr/src
+    - name: Create dokuwiki directory
+      file:
+        path: /usr/src/dokuwiki
+        state: directory
+        mode: '0755'
     - name: Unzip dokuwiki
       unarchive:
         remote_src: yes # The archive is already on the remote machine, not on the control machine
