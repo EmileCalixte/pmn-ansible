@@ -26,10 +26,10 @@
 
     - name: Download and extract dokuwiki
       block:
-        - name: Download dokuwiki
-        get_url:
-          url: https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
-          dest: /usr/src
+      - name: Download dokuwiki
+      get_url:
+        url: https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
+        dest: /usr/src
 
       - name: Unzip dokuwiki
         unarchive:
@@ -44,7 +44,7 @@
         file:
           path: /usr/src/dokuwiki-stable.tgz
           state: absent
-          
+
       when: not dokuwiki_directory.stat.exists or not dokuwiki_directory.stat.isdir
 
     
