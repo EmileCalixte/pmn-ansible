@@ -87,17 +87,31 @@
         path: /var/www/politique_wiki
       register: politique_wiki_directory
 
-    - name: Copy dokuwiki to /var/www
-      command: cp -r /usr/src/dokuwiki /var/www/{{ item }}
-      with_items:
-        - recettes_wiki
-        - politique_wiki
+    - name: Copy dokuwiki to /var/www/recettes_wiki
+      command: cp -r /usr/src/dokuwiki /var/www/recettes_wiki
+      when: not recettes_wiki_directory.stat.exists
+
+    - name: Copy dokuwiki to /var/www/politique_wiki
+      command: cp -r /usr/src/dokuwiki /var/www/politique_wiki
+      when: not politique_wiki_directory.stat.exists
     
-    - name: Change permissions to directories in /var/www
-      command: chown 755 /var/www/{{ item }}
-      with_items:
-        - recettes_wiki
-        - politique_wiki
+    - name: Change permissions of /var/www/recettes_wiki
+      file:
+        path: /var/www/recettes_wiki
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data
+      when: not recettes_wiki_directory.stat.exists
+    
+    - name: Change permissions of /var/www/politique_wiki
+      file:
+        path: /var/www/politique_wiki
+        state: directory
+        recurse: yes
+        owner: www-data
+        group: www-data
+      when: not politique_wiki_directory.stat.exists
 
     - name: Enable sites and reload configuration
       shell: a2ensite recettes_wiki && a2ensite politique_wiki && systemctl reload apache2
