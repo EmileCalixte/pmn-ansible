@@ -120,4 +120,4 @@
       command: a2ensite politique-wiki
     
     - name: Reload apache
-      command: systelctl apache2 reload
+      command: systemctl reload apache2
