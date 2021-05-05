@@ -82,23 +82,16 @@
       command: cp -r /usr/src/dokuwiki /var/www/politique_wiki
       when: not politique_wiki_directory.stat.exists
     
-    - name: Change permissions of /var/www/recettes_wiki
+    - name: Change permissions in /var/www
       file:
-        path: /var/www/recettes_wiki
+        path: /var/www/{{ item }}
         state: directory
         recurse: yes
         owner: www-data
         group: www-data
-      when: not recettes_wiki_directory.stat.exists
-    
-    - name: Change permissions of /var/www/politique_wiki
-      file:
-        path: /var/www/politique_wiki
-        state: directory
-        recurse: yes
-        owner: www-data
-        group: www-data
-      when: not politique_wiki_directory.stat.exists
+      with_items:
+        - recettes_wiki
+        - politique_wiki
     
     ######################
     ## UPDATE HOSTS
