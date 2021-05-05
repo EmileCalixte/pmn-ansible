@@ -112,6 +112,34 @@
         owner: www-data
         group: www-data
       when: not politique_wiki_directory.stat.exists
+    
+    ######################
+    ## UPDATE HOSTS
+    ######################
+
+    - name: Check if /etc/hosts contains recettes.wiki host
+      command: grep -c "^127.0.0.1  recettes.wiki" /etc/hosts
+      register: grep_hosts_recettes_wiki
+
+    - name: Check if /etc/hosts contains politique.wiki host
+      command: grep -c "^127.0.0.1  politique.wiki" /etc/hosts
+      register: grep_hosts_politique_wiki
+
+    - name: Add recettes.wiki in hosts
+      lineinfile:
+        dest: /etc/hosts
+        line: "127.0.0.1  recettes.wiki"
+      when: grep_hosts_recettes_wiki.stdout == "0"
+
+    - name: Add politique.wiki in hosts
+      lineinfile:
+        dest: /etc/hosts
+        line: "127.0.0.1  politique.wiki"
+      when: grep_hosts_politique_wiki.stdout == "0"
+    
+    ######################
+    ## ENABLE SITES AND RELOAD APACHE
+    ######################
 
     - name: Enable recettes.wiki
       command: a2ensite recettes-wiki
