@@ -68,6 +68,10 @@
       register: item.var_www_directory_stat
       with_items: "{{ sites }}"
 
+    - name: Debug
+      debug:
+        msg: "{{ sites }}"
+
     - name: Copy dokuwiki to /var/www
       command: "cp -r /usr/src/dokuwiki /var/www/{{ item.var_www_directory }}"
       when: not item.var_www_directory_stat.stat.exists
