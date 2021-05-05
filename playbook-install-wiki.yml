@@ -118,11 +118,11 @@
     ######################
 
     - name: Check if /etc/hosts contains recettes.wiki host
-      command: "grep -c \"^127.0.0.1  recettes.wiki\" /etc/hosts"
+      shell: "grep -c \"^127.0.0.1  recettes.wiki\" /etc/hosts || true"
       register: grep_hosts_recettes_wiki
 
     - name: Check if /etc/hosts contains politique.wiki host
-      command: "grep -c \"^127.0.0.1  politique.wiki\" /etc/hosts"
+      shell: "grep -c \"^127.0.0.1  politique.wiki\" /etc/hosts || true"
       register: grep_hosts_politique_wiki
 
     - name: Add recettes.wiki in hosts
