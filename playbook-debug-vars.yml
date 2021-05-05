@@ -1,0 +1,8 @@
+---
+## Play
+- hosts: role_hosting
+
+  tasks:
+  - name: Debug sites
+    debug:
+      msg: "{{ sites}}"

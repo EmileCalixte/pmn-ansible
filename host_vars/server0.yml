@@ -1,0 +1,10 @@
+vim_syntax: true
+vim_yaml: false
+
+sites:
+  - recettes.wiki:
+    something: test
+    something_else: test2
+  - politique.wiki:
+    something: test3
+    something_else: test4
