@@ -16,4 +16,4 @@
         dest: /home/vagrant/.vimrc
         owner: vagrant
         group: vagrant
-      when: enable_vim == True
+      when: enable_vim
