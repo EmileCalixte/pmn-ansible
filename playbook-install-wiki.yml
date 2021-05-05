@@ -27,9 +27,9 @@
     - name: Download and extract dokuwiki
       block:
         - name: Download dokuwiki
-        get_url:
-          url: https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
-          dest: /usr/src
+          get_url:
+            url: https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
+            dest: /usr/src
 
         - name: Unzip dokuwiki
           unarchive:
