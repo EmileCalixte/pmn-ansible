@@ -87,25 +87,17 @@
         path: /var/www/politique_wiki
       register: politique_wiki_directory
 
-    - name: Copy dokuwiki to recettes_wiki
-      copy: 
-        remote_src: yes
-        src: /usr/src/dokuwiki
-        dest: /var/www/recettes_wiki
-        owner: www-data
-        group: www-data
-        mode: '0755'
-      when: not recettes_wiki_directory.stat.exists
-
-    - name: Copy dokuwiki to politique_wiki
-      copy: 
-        remote_src: yes
-        src: /usr/src/dokuwiki
-        dest: /var/www/politique_wiki
-        owner: www-data
-        group: www-data
-        mode: '0755'
-      when: not politique_wiki_directory.stat.exists
+    - name: Copy dokuwiki to /var/www
+      command: cp -r /usr/src/dokuwiki /var/www/{{ item }}
+      with_items:
+        - recettes_wiki
+        - politique_wiki
+    
+    - name: Change permissions to directories in /var/www
+      command: chown 755 /var/www/{{ item }}
+      with_items:
+        - recettes_wiki
+        - politique_wiki
 
     - name: Enable sites and reload configuration
       shell: a2ensite recettes_wiki && a2ensite politique_wiki && systemctl reload apache2
