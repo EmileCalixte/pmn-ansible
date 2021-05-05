@@ -3,7 +3,7 @@
 - hosts: app_hosting
 
   tasks:
-    - name: Install apache2
+    - name: Install apache2 & PHP
       apt:
         name:
           - apache2
@@ -18,7 +18,7 @@
         path: /usr/src/dokuwiki
       register: dokuwiki_directory
 
-    - name: Delete dokuwiki file if is not directory
+    - name: Delete dokuwiki file if it is not a directory
       file:
         path: /usr/src/dokuwiki
         state: absent
@@ -49,30 +49,16 @@
 
     
     ######################
-    ## VIRTUALHOST
+    ## VIRTUALHOSTS
     ######################
 
-    # - name: Check if recettes.wiki virtualhost exists
-    #   stat:
-    #     path: /etc/apache2/sites-available/recettes-wiki.conf
-    #   register: recettes_wiki_vhost
-
-    # - name: Check if politique.wiki virtualhost exists
-    #   stat:
-    #     path: /etc/apache2/sites-available/politique-wiki.conf
-    #   register: politique_wiki_vhost
-
-    - name: Copy recettes.wiki virtualhost
+    - name: Copy virtualhosts
       copy:
-        src: files/recettes-wiki.conf
-        dest: /etc/apache2/sites-available/recettes-wiki.conf
-      # when: not recettes_wiki_vhost.stat.exists
-
-    - name: Copy politique.wiki virtualhost
-      copy:
-        src: files/politique-wiki.conf
-        dest: /etc/apache2/sites-available/politique-wiki.conf
-      # when: not politique_wiki_vhost.stat.exists
+        src: files/{{ item }}
+        dest: /etc/apache2/sites-available/{{ item }}
+      with_items:
+        - recettes-wiki.conf
+        - politique-wiki.conf
     
     ######################
     ## WWW DIRECTORIES
