@@ -120,10 +120,12 @@
     - name: Check if /etc/hosts contains recettes.wiki host
       shell: "grep -c \"^127.0.0.1  recettes.wiki\" /etc/hosts || true"
       register: grep_hosts_recettes_wiki
+      changed_when: false
 
     - name: Check if /etc/hosts contains politique.wiki host
       shell: "grep -c \"^127.0.0.1  politique.wiki\" /etc/hosts || true"
       register: grep_hosts_politique_wiki
+      changed_when: false
 
     - name: Add recettes.wiki in hosts
       lineinfile:
