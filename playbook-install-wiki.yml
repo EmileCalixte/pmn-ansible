@@ -62,19 +62,12 @@
     ## WWW DIRECTORIES
     ######################
 
-    - name: Check if directories exist in /var/www
-      stat:
-        path: "/var/www/{{ item.var_www_directory }}"
-      register: toto
-      with_items: "{{ sites }}"
-
-    - name: Debug
-      debug:
-        msg: "{{ toto }}"
-
     - name: Copy dokuwiki to /var/www
-      command: "cp -r /usr/src/dokuwiki /var/www/{{ item.var_www_directory }}"
-      when: not item.var_www_directory_stat.stat.exists
+      copy:
+        remote_src: yes
+        src: /usr/src/dokuwiki
+        dest: "/var/www/{{item.var_www_directory}}"
+        mode: "0755"
       with_items: "{{ sites }}"
     
     - name: Change permissions in /var/www
@@ -90,7 +83,7 @@
     ## UPDATE HOSTS
     ######################
 
-    - name: Add recettes.wiki in hosts
+    - name: Add sites in hosts
       lineinfile:
         dest: /etc/hosts
         line: "127.0.0.1  {{ item.url }}"
