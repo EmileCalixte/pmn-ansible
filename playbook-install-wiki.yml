@@ -114,10 +114,10 @@
       when: not politique_wiki_directory.stat.exists
 
     - name: Enable recettes.wiki
-      command: a2ensite recettes_wiki
+      command: a2ensite recettes-wiki
     
     - name: Enable politique.wiki
-      command: a2ensite politique_wiki
+      command: a2ensite politique-wiki
     
     - name: Reload apache
       command: systelctl apache2 reload
