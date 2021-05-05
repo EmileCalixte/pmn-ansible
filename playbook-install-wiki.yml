@@ -19,5 +19,7 @@
         dest: /usr/src
     - name: Rename dokuwiki directory
       command: mv /usr/src/dokuwiki-2020-07-29 /usr/src/dokuwiki
+    - name: Delete downloaded archive
+      command: rm dokuwiki-stable.tgz
 
         
