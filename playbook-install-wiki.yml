@@ -52,27 +52,27 @@
     ## VIRTUALHOST
     ######################
 
-    - name: Check if recettes.wiki virtualhost exists
-      stat:
-        path: /etc/apache2/sites-available/recettes-wiki.conf
-      register: recettes_wiki_vhost
+    # - name: Check if recettes.wiki virtualhost exists
+    #   stat:
+    #     path: /etc/apache2/sites-available/recettes-wiki.conf
+    #   register: recettes_wiki_vhost
 
-    - name: Check if politique.wiki virtualhost exists
-      stat:
-        path: /etc/apache2/sites-available/politique-wiki.conf
-      register: politique_wiki_vhost
+    # - name: Check if politique.wiki virtualhost exists
+    #   stat:
+    #     path: /etc/apache2/sites-available/politique-wiki.conf
+    #   register: politique_wiki_vhost
 
     - name: Copy recettes.wiki virtualhost
       copy:
         src: files/recettes-wiki.conf
         dest: /etc/apache2/sites-available/recettes-wiki.conf
-      when: not recettes_wiki_vhost.stat.exists
+      # when: not recettes_wiki_vhost.stat.exists
 
     - name: Copy politique.wiki virtualhost
       copy:
         src: files/politique-wiki.conf
         dest: /etc/apache2/sites-available/politique-wiki.conf
-      when: not politique_wiki_vhost.stat.exists
+      # when: not politique_wiki_vhost.stat.exists
     
     ######################
     ## WWW DIRECTORIES
@@ -118,27 +118,27 @@
     ## UPDATE HOSTS
     ######################
 
-    - name: Check if /etc/hosts contains recettes.wiki host
-      shell: "grep -c \"^127.0.0.1  recettes.wiki\" /etc/hosts || true"
-      register: grep_hosts_recettes_wiki
-      changed_when: false
+    # - name: Check if /etc/hosts contains recettes.wiki host
+    #   shell: "grep -c \"^127.0.0.1  recettes.wiki\" /etc/hosts || true"
+    #   register: grep_hosts_recettes_wiki
+    #   changed_when: false
 
-    - name: Check if /etc/hosts contains politique.wiki host
-      shell: "grep -c \"^127.0.0.1  politique.wiki\" /etc/hosts || true"
-      register: grep_hosts_politique_wiki
-      changed_when: false
+    # - name: Check if /etc/hosts contains politique.wiki host
+    #   shell: "grep -c \"^127.0.0.1  politique.wiki\" /etc/hosts || true"
+    #   register: grep_hosts_politique_wiki
+    #   changed_when: false
 
     - name: Add recettes.wiki in hosts
       lineinfile:
         dest: /etc/hosts
         line: "127.0.0.1  recettes.wiki"
-      when: grep_hosts_recettes_wiki.stdout == "0"
+      # when: grep_hosts_recettes_wiki.stdout == "0"
 
     - name: Add politique.wiki in hosts
       lineinfile:
         dest: /etc/hosts
         line: "127.0.0.1  politique.wiki"
-      when: grep_hosts_politique_wiki.stdout == "0"
+      # when: grep_hosts_politique_wiki.stdout == "0"
     
     ######################
     ## ENABLE SITES AND RELOAD APACHE
