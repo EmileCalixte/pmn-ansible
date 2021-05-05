@@ -5,8 +5,9 @@
   tasks:
     - name: Install apache2
       apt:
-        name: apache2 php7.4
-        state: present
+        name:
+          - apache2
+          - php7.4
     - name: Download docuwiki
       get_url:
         url: https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
