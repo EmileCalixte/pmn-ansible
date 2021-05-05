@@ -163,4 +163,4 @@
     
     - name: Reload apache
       command: systemctl reload apache2
-      when: not enabled_recettes_wiki.stat.exists || not enabled_politique_wiki.stat.exists
+      when: not enabled_recettes_wiki.stat.exists or not enabled_politique_wiki.stat.exists
