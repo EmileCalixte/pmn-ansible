@@ -153,14 +153,6 @@
         path: /etc/apache2/sites-enabled/politique-wiki.conf
       register: enabled_politique_wiki
 
-    - name: Debug
-      debug:
-        msg: "{{ enabled_recettes_wiki }}"
-
-    - name: Debug
-      debug:
-        msg: "{{ enabled_politique_wiki }}"
-
     - name: Enable recettes.wiki
       command: a2ensite recettes-wiki
       when: not enabled_recettes_wiki.stat.exists
