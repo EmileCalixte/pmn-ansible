@@ -8,23 +8,32 @@
         name:
           - apache2
           - php7.3
-    - name: Delete dokuwiki if already exists # To be idempotent
-      file:
+
+    - name: Check if dokuwiki is already installed
+      stat:
         path: /usr/src/dokuwiki
-        state: absent
+      register: dokuwiki_already_installed
+
     - name: Download dokuwiki
       get_url:
         url: https://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
         dest: /usr/src
+      when: dokuwiki_already_installed == False
+
     - name: Unzip dokuwiki
       unarchive:
         remote_src: yes # The archive is already on the remote machine, not on the control machine
         src: /usr/src/dokuwiki-stable.tgz
         dest: /usr/src
+      when: dokuwiki_already_installed == False
+
     - name: Rename dokuwiki directory
       command: mv /usr/src/dokuwiki-2020-07-29 /usr/src/dokuwiki
+      when: dokuwiki_already_installed == False
+
     - name: Delete downloaded archive
       file:
         path: /usr/src/dokuwiki-stable.tgz
         state: absent
+      when: dokuwiki_already_installed == False
         
