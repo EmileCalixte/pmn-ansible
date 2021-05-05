@@ -62,23 +62,16 @@
     ## WWW DIRECTORIES
     ######################
 
-    - name: Check if recettes_wiki directory exists
+    - name: Check if directories exist in /var/www
       stat:
-        path: /var/www/recettes_wiki
-      register: recettes_wiki_directory
+        path: "/var/www/{{ item.var_www_directory }}"
+      register: item.var_www_directory_stat
+      with_items: "{{ sites }}"
 
-    - name: Check if politique_wiki directory exists
-      stat:
-        path: /var/www/politique_wiki
-      register: politique_wiki_directory
-
-    - name: Copy dokuwiki to /var/www/recettes_wiki
-      command: cp -r /usr/src/dokuwiki /var/www/recettes_wiki
-      when: not recettes_wiki_directory.stat.exists
-
-    - name: Copy dokuwiki to /var/www/politique_wiki
-      command: cp -r /usr/src/dokuwiki /var/www/politique_wiki
-      when: not politique_wiki_directory.stat.exists
+    - name: Copy dokuwiki to /var/www
+      command: "cp -r /usr/src/dokuwiki /var/www/{{ item.var_www_directory }}"
+      when: not item.var_www_directory_stat.stat.exists
+      with_items: "{{ sites }}"
     
     - name: Change permissions in /var/www
       file:
