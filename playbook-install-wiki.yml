@@ -53,24 +53,24 @@
 
     - name: Check if recettes.wiki virtualhost exists
       stat:
-        path: /etc/apache2/recettes-wiki.conf
+        path: /etc/apache2/sites-available/recettes-wiki.conf
       register: recettes_wiki_vhost
 
     - name: Check if politique.wiki virtualhost exists
       stat:
-        path: /etc/apache2/politique-wiki.conf
+        path: /etc/apache2/sites-available/politique-wiki.conf
       register: politique_wiki_vhost
 
     - name: Copy recettes.wiki virtualhost
       copy:
         src: files/recettes-wiki.conf
-        dest: /etc/apache2/recettes-wiki.conf
+        dest: /etc/apache2/sites-available/recettes-wiki.conf
       when: not recettes_wiki_vhost.stat.exists
 
     - name: Copy politique.wiki virtualhost
       copy:
         src: files/politique-wiki.conf
-        dest: /etc/apache2/politique-wiki.conf
+        dest: /etc/apache2/sites-available/politique-wiki.conf
       when: not politique_wiki_vhost.stat.exists
     
     ######################
