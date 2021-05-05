@@ -145,12 +145,12 @@
 
     - name: Check if recettes.wiki is enabled
       stat:
-        path: /etc/apache2/sites-enables/recettes-wiki.conf
+        path: /etc/apache2/sites-enabled/recettes-wiki.conf
       register: enabled_recettes_wiki
 
     - name: Check if politique.wiki is enabled
       stat:
-        path: /etc/apache2/sites-enables/politique-wiki.conf
+        path: /etc/apache2/sites-enabled/politique-wiki.conf
       register: enabled_politique_wiki
 
     - name: Debug
