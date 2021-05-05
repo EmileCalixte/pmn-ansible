@@ -63,11 +63,9 @@
     ######################
 
     - name: Copy dokuwiki to /var/www
-      copy:
-        remote_src: yes
+      synchronize:
         src: /usr/src/dokuwiki
         dest: "/var/www/{{item.var_www_directory}}"
-        mode: "0755"
       with_items: "{{ sites }}"
     
     - name: Change permissions in /var/www
