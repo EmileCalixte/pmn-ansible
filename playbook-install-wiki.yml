@@ -62,13 +62,13 @@
       register: politique_wiki_vhost
 
     - name: Copy recettes.wiki virtualhost
-      file:
+      copy:
         src: files/recettes-wiki.conf
         dest: /etc/apache2/recettes-wiki.conf
       when: not recettes_wiki_vhost.stat.exists
 
     - name: Copy politique.wiki virtualhost
-      file:
+      copy:
         src: files/politique-wiki.conf
         dest: /etc/apache2/politique-wiki.conf
       when: not politique_wiki_vhost.stat.exists
