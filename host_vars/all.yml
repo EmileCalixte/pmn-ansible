@@ -6,3 +6,7 @@ mariadb_users:
   - name: nextcloud
     password: nextcloud_pass
     priv: '*.*:ALL.GRANT'
+
+nextcloud_db_system: "mysql"
+nextcloud_db_host: "192.168.50.20"
+nextcloud_db_name: "nextcloud_db"

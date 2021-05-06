@@ -12,3 +12,7 @@
   roles:
     - role: adfinis-sygroup.mariadb
 
+- hosts: app_hosting
+  roles:
+    - role: thorian93.ansible_role_nextcloud
+      become: yes
