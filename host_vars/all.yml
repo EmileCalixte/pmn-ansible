@@ -1,0 +1,8 @@
+mariadb_databases:
+  - name: nextcloud_db
+    encoding: utf8
+
+mariadb_users:
+  - name: nextcloud
+    password: nextcloud_pass
+    priv: '*.*:ALL.GRANT'
